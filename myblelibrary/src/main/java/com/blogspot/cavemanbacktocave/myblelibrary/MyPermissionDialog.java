@@ -2,6 +2,7 @@ package com.blogspot.cavemanbacktocave.myblelibrary;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
@@ -35,6 +36,7 @@ public class MyPermissionDialog  extends Dialog {
             @Override
             public void onClick(View v) {
                 onDialogButtonClick.buttonClickEventDialog(true);
+                dismiss();
             }
         });
 
@@ -42,8 +44,16 @@ public class MyPermissionDialog  extends Dialog {
             @Override
             public void onClick(View v) {
                 onDialogButtonClick.buttonClickEventDialog(false);
+                dismiss();
             }
         });
+
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[] {0xFF616261,0xFF131313});
+        gd.setCornerRadius(20f);
+
+        closeBtn.setBackground(gd);
 
     }
 }

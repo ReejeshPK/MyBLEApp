@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_location_permission">Need location permission for Bluetooth(BLE) connectivity.
+        We do not store or process your location.
+        <a href="https://www.google.com/search?q=Why+BLE+requires+Location+permission+Android"> To Know More, Click Here.</a></string>
+</resources>
