@@ -1,0 +1,3 @@
+include ':myblelibrary'
+include ':app'
+rootProject.name = "My BLE App"
