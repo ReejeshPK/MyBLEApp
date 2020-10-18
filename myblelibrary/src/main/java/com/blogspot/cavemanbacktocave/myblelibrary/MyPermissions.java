@@ -31,17 +31,18 @@ public class MyPermissions implements LifecycleObserver {
         /**Private dummy needed for getInstance*/
     }
 
-    public static MyPermissions getInstance() {
+    public static synchronized MyPermissions getInstance() {
         /**Note: Using context within getInstance is not recommended like getInstance(Context context), it leads to
          * saving the old context, so when the app goes background and comes back, it does not get new context, it uses old
-         * and becomes not usable*/
+         * and becomes not usable. We can use it immediately, but not good for this model because, we are calling constructor
+         * only once*/
         if (myPermissions == null) {
             myPermissions = new MyPermissions();
         }
         return myPermissions;
     }
 
-    public boolean checkLocationPermission(Activity activity) {
+    public boolean checkLocationPermission(Activity activity, MyPermissionDialog myPermissionsDialog) {
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -52,7 +53,7 @@ public class MyPermissions implements LifecycleObserver {
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
 
-                explainPermissionDialog(activity);
+                explainPermissionDialog(activity,myPermissionsDialog);
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(activity,
@@ -67,21 +68,9 @@ public class MyPermissions implements LifecycleObserver {
 
     private MyPermissionDialog myPermissionDialog;
 
-    private void explainPermissionDialog(final Activity activity) {
+    private void explainPermissionDialog(final Activity activity,final MyPermissionDialog myPermissionDialog) {
         if (activity != null) {
             this.loginActivityWeakRef=new WeakReference<Activity>(activity);
-            myPermissionDialog = new MyPermissionDialog(activity, new MyPermissionDialog.OnDialogButtonClick() {
-                @Override
-                public void buttonClickEventDialog(boolean okBtnClicked) {
-                    if (okBtnClicked) {
-                        ActivityCompat.requestPermissions(activity,
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                BLE_LOCATION_PERMISSION_CODE);
-                    } else {
-                        myPermissionDialog.dismiss();
-                    }
-                }
-            });
             //todo:check if already showing
             Log.d(TAG, "explainPermissionDialog: ");
             if (!myPermissionDialog.isShowing()) {

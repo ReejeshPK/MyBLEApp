@@ -41,4 +41,22 @@ public class ThemeUtils {
 
         return accentColor;
     }
+
+    @TargetApi(LOLLIPOP)
+    static int resolvePrimaryColor(Context context) {
+        Resources.Theme theme = context.getTheme();
+
+        // on Lollipop, grab system colorAccent attribute
+        // pre-Lollipop, grab AppCompat colorAccent attribute
+        // finally, check for custom mp_colorAccent attribute
+        int attr = isAtLeastL() ? android.R.attr.colorPrimary : R.attr.colorPrimary;
+        //TypedArray typedArray = theme.obtainStyledAttributes(new int[] { attr, R.attr.mp_colorAccent });
+        TypedArray typedArray = theme.obtainStyledAttributes(new int[] { attr, R.attr.colorPrimary });
+
+        int colorPrimary = typedArray.getColor(0, FALLBACK_COLOR);
+        colorPrimary = typedArray.getColor(1, colorPrimary);
+        typedArray.recycle();
+
+        return colorPrimary;
+    }
 }
