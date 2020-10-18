@@ -17,30 +17,32 @@ import java.lang.ref.WeakReference;
 public class MyPermissions implements LifecycleObserver {
     private String TAG = MyPermissions.class.getSimpleName();
     public static final int BLE_LOCATION_PERMISSION_CODE = 572;
-    private Context context;
-    private Activity activity;
+
     private static MyPermissions myPermissions = null;
     private WeakReference<Activity> loginActivityWeakRef;
 
-    private MyPermissions(Context context, Activity activity) {
+    /*private MyPermissions(Context context, Activity activity) {
         this.context = context;
         this.activity = activity;
         this.loginActivityWeakRef=new WeakReference<Activity>(activity);
-    }
+    }*/
 
     private MyPermissions() {
         /**Private dummy needed for getInstance*/
     }
 
-    public static MyPermissions getInstance(Context context, Activity activity) {
+    public static MyPermissions getInstance() {
+        /**Note: Using context within getInstance is not recommended like getInstance(Context context), it leads to
+         * saving the old context, so when the app goes background and comes back, it does not get new context, it uses old
+         * and becomes not usable*/
         if (myPermissions == null) {
-            myPermissions = new MyPermissions(context, activity);
+            myPermissions = new MyPermissions();
         }
         return myPermissions;
     }
 
-    public boolean checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(context,
+    public boolean checkLocationPermission(Activity activity) {
+        if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
@@ -50,7 +52,7 @@ public class MyPermissions implements LifecycleObserver {
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
 
-                explainPermissionDialog();
+                explainPermissionDialog(activity);
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(activity,
@@ -65,9 +67,10 @@ public class MyPermissions implements LifecycleObserver {
 
     private MyPermissionDialog myPermissionDialog;
 
-    private void explainPermissionDialog() {
-        if (context != null) {
-            myPermissionDialog = new MyPermissionDialog(context, new MyPermissionDialog.OnDialogButtonClick() {
+    private void explainPermissionDialog(final Activity activity) {
+        if (activity != null) {
+            this.loginActivityWeakRef=new WeakReference<Activity>(activity);
+            myPermissionDialog = new MyPermissionDialog(activity, new MyPermissionDialog.OnDialogButtonClick() {
                 @Override
                 public void buttonClickEventDialog(boolean okBtnClicked) {
                     if (okBtnClicked) {
@@ -84,6 +87,7 @@ public class MyPermissions implements LifecycleObserver {
             if (!myPermissionDialog.isShowing()) {
                 Log.d(TAG, "explainPermissionDialog: isshow");
                 if (loginActivityWeakRef.get() != null && !loginActivityWeakRef.get().isFinishing()) {
+                    /**This if condition prevents crashes*/
                     Log.d(TAG, "explainPermissionDialog: show");
                     //https://stackoverflow.com/a/18665887/7710739
                     myPermissionDialog.show();

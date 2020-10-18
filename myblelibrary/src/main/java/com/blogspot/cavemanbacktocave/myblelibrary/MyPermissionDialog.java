@@ -50,7 +50,7 @@ public class MyPermissionDialog  extends Dialog {
 
         GradientDrawable gd = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[] {0xFF616261,0xFF131313});
+                new int[] {ThemeUtils.resolveAccentColor(getContext()),ThemeUtils.resolveAccentColor(getContext())});
         gd.setCornerRadius(20f);
 
         closeBtn.setBackground(gd);

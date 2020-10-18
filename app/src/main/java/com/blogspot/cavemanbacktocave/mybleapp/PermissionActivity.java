@@ -17,10 +17,12 @@ public class PermissionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: ");
 
-        MyPermissions myPermissions=MyPermissions.getInstance(PermissionActivity.this,PermissionActivity.this);
+        MyPermissions myPermissions=MyPermissions.getInstance();
         /**This like getLifecycle() is used to manage activity lifecycle events*/
-        getLifecycle().addObserver(myPermissions);
-        myPermissions.checkLocationPermission();
+        getLifecycle().addObserver(myPermissions);/**Dont skip this lifecycle, you may encounter crashes*/
+        if(myPermissions.checkLocationPermission(PermissionActivity.this)){
+            //if permission granted proceed
+        }
 
     }
 
