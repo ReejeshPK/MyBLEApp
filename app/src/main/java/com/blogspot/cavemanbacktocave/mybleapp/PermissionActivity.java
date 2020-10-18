@@ -24,8 +24,11 @@ public class PermissionActivity extends AppCompatActivity {
         /**This like getLifecycle() is used to manage activity lifecycle events*/
         getLifecycle().addObserver(myPermissions);/**Dont skip this lifecycle, you may encounter crashes*/
 
-        MyPermissionDialog myPermissionsDialog = new MyPermissionsDialogBuilder().setDialogTitle("Title")
-                .setDialogDescription("Desc").build(this);
+        MyPermissionDialog myPermissionsDialog = new MyPermissionsDialogBuilder()
+                .setDialogTitle("Title")
+                .setDialogDescription("Desc")
+                .setFontNameInAssetsFontsFolder("fonts/SansitaSwashedRegular.ttf")
+                .build(this);
 
         if (myPermissions.checkLocationPermission(PermissionActivity.this,myPermissionsDialog)) {
             //if permission granted proceed
