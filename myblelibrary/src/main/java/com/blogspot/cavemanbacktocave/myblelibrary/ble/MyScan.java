@@ -40,6 +40,17 @@ public class MyScan {
      *
      */
 
+
+    /**
+     *
+     * Check your permissions and Bluetooth state
+     * Before we end this article I need to mention some things about acquiring the appropriate permissions.
+     * Scanning only works if you have the following permission AND you have Location Service activated.
+     * <uses-permission android:name="android.permission.BLUETOOTH" />
+     * <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+     * <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+     * */
+
     private String TAG = MyScan.class.getSimpleName();
 
     private static MyScan myScan = null;
@@ -57,6 +68,7 @@ public class MyScan {
         if (myScan == null) {
             myScan = new MyScan();
         }
+        return myScan;
     }
 
     public void startBLEScan(Activity activity, MyBLEScanParameters myBLEScanParameters) {
@@ -75,7 +87,7 @@ public class MyScan {
 
         if (scanner != null) {
             /*todo: allow use of filters*/
-            scanner.startScan(myBLEScanParameters.getFilters(), null, scanCallback);
+            scanner.startScan(myBLEScanParameters.getFilters(), myBLEScanParameters.getScanSettings(), scanCallback);
             Log.d(TAG, "scan started");
         }  else {
             Log.e(TAG, "could not get scanner object");
@@ -102,20 +114,5 @@ public class MyScan {
         }
     };
 
-    UUID BLP_SERVICE_UUID = UUID.fromString("00001810-0000-1000-8000-00805f9b34fb");
-    UUID[] serviceUUIDs = new UUID[]{BLP_SERVICE_UUID};
-    private void startBLEScanWithFilter(UUID[] serviceUUIDs){
-        /*Pass NULL for no filter-UUID -this is optional, can be made into builder*/
-        List<ScanFilter> filters = null;
-        if(serviceUUIDs != null) {
-            filters = new ArrayList<>();
-            for (UUID serviceUUID : serviceUUIDs) {
-                ScanFilter filter = new ScanFilter.Builder()
-                        .setServiceUuid(new ParcelUuid(serviceUUID))
-                        .build();
-                filters.add(filter);
-            }
-        }
-    }
 
 }
