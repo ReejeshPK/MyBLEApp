@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.blogspot.cavemanbacktocave.myblelibrary.ble.MyScan;
+
 public class BLEScanningActivity extends AppCompatActivity {
 
     private RecyclerView bleList;
@@ -19,6 +21,7 @@ public class BLEScanningActivity extends AppCompatActivity {
         bleList.setLayoutManager(layoutManager);
 
 
+        MyScan.getInstance().startBLEScan();
 
     }
 }
