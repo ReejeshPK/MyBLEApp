@@ -1,7 +1,10 @@
 package com.blogspot.cavemanbacktocave.myblelibrary.utils;
 
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanFilter;
+import android.content.Intent;
 import android.os.ParcelUuid;
 
 import java.util.ArrayList;
@@ -9,6 +12,22 @@ import java.util.List;
 import java.util.UUID;
 
 public class MyBLEUtils {
+
+    private void turnONBluetooth(Activity activity,int REQUEST_ENABLE_BT_REQUEST_CODE){
+        if (isBluetoothON()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT_REQUEST_CODE);
+        }
+    }
+
+    public boolean isBluetoothON(){
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!bluetoothAdapter.isEnabled()) {
+           return true;
+        }
+        return false;
+    }
+
     /**
      * https://medium.com/@martijn.van.welie/making-android-ble-work-part-1-a736dcd53b02
      * see - Scanning for devices with a specific service UUID
