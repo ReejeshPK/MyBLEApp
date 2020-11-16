@@ -1,4 +1,4 @@
-package com.blogspot.cavemanbacktocave.myblelibrary;
+package com.blogspot.cavemanbacktocave.myblelibrary.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;

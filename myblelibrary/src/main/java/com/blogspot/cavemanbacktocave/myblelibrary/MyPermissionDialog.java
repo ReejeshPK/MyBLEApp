@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -14,6 +13,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+
+import com.blogspot.cavemanbacktocave.myblelibrary.utils.CustomFontHelper;
+import com.blogspot.cavemanbacktocave.myblelibrary.utils.Utils;
 
 public class MyPermissionDialog extends Dialog {
     private String TAG=MyPermissionDialog.class.getSimpleName();

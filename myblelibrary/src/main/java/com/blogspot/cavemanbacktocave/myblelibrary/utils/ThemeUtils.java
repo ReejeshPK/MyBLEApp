@@ -1,9 +1,11 @@
-package com.blogspot.cavemanbacktocave.myblelibrary;
+package com.blogspot.cavemanbacktocave.myblelibrary.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+
+import com.blogspot.cavemanbacktocave.myblelibrary.R;
 
 import static android.graphics.Color.parseColor;
 import static android.os.Build.VERSION.SDK_INT;
@@ -25,7 +27,7 @@ public class ThemeUtils {
     }
 
     @TargetApi(LOLLIPOP)
-    static int resolveAccentColor(Context context) {
+    public static int resolveAccentColor(Context context) {
         Resources.Theme theme = context.getTheme();
 
         // on Lollipop, grab system colorAccent attribute
@@ -43,7 +45,7 @@ public class ThemeUtils {
     }
 
     @TargetApi(LOLLIPOP)
-    static int resolvePrimaryColor(Context context) {
+    public static int resolvePrimaryColor(Context context) {
         Resources.Theme theme = context.getTheme();
 
         // on Lollipop, grab system colorAccent attribute

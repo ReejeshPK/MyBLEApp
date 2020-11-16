@@ -1,7 +1,9 @@
-package com.blogspot.cavemanbacktocave.myblelibrary;
+package com.blogspot.cavemanbacktocave.myblelibrary.utils;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+
+import com.blogspot.cavemanbacktocave.myblelibrary.utils.ThemeUtils;
 
 public class Utils {
 
